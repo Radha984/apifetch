@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 10px
+        }
+        #container>div{
+            background-color: rgb(225, 206, 206);
+            padding: 10px;
+            font-size: 20px;
+        }
+        #container>div>div{
+            background-color: rgb(223, 201, 174);
+        }
+        img{
+            width: 25%;
+            height: 30vh;
+
+        }
+        h1{
+            font-size: 32px;
+            padding: 10px;
+            margin: 5px;
+        }
+        
+       
+    </style>
+</head>
+<body>
+    <center><h1>Clothing Items</button></h1><br>
+   <div id="container"></div>
+
+    
+    <script>
+        async function getdata(){
+
+    
+            let res=await fetch("https://fakestoreapi.com/products")
+            let data=await res.json()
+            console.log(data)
+
+
+            
+
+
+        let parent=document.getElementById("container")
+         emp=[]
+          let newdata=data.map((val)=>{
+            let child=document.createElement("div")
+            let childa=document.createElement("div")
+            let childb=document.createElement("div")
+            let childc=document.createElement("div")
+            let childd=document.createElement("div")
+            let img=document.createElement("img")
+            let btn=document.createElement("button")
+            img.src=val.image
+            let el1=document.createElement("br")
+            btn.innerHTML='Add to Cart'
+            btn.style.fontSize="20px";
+            btn.style.padding="8px";
+
+            btn.addEventListener("click",function(){
+                console.log(val)
+                emp.push(val)
+                localStorage.setItem("details",JSON.stringify(emp))
+            })
+            childa.innerHTML=val.id
+            childa.style.fontSize="24px";
+            childb.innerHTML=val.title
+            childb.style.fontSize="24px"
+
+            childc.innerHTML=val.price
+            childc.style.fontSize="24px"
+
+            childd.innerHTML=val.category
+            childd.style.fontSize="24px"
+
+            child.append(childa,childb,childc,childd,img,el1,btn)
+            parent.append(child)
+          })
+          
+        }
+        
+        
+        getdata()
+
+
+    </script>
+    
+</body>
+</html>
